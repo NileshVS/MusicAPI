@@ -1,4 +1,5 @@
 const express = require('express');
+const Joi = require('@hapi/joi');
 const router = express.Router();
 
 let musicLibrary= [{
@@ -47,6 +48,11 @@ router.get('/allmusic/:id',(req,res) => {
 
 //Add music using POST
 router.post('/newmusic', (req,res) => {
+    const musicSchema = Joi.object().keys({
+        albumName: Joi.string().min(5).max(150).required()
+    });
+    let result = Joi.validate(req.body, musicSchema);
+    console.log(result);
     let newMusic = {
         id: musicLibrary.length + 1,
         albumName: req.body.albumName,

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/NileshVS/MusicAPI#readme",
   "dependencies": {
+    "@hapi/joi": "^16.1.2",
     "express": "^4.17.1"
   }
 }

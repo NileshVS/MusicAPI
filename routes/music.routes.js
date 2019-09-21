@@ -48,11 +48,9 @@ router.get('/allmusic/:id',(req,res) => {
 
 //Add music using POST
 router.post('/newmusic', (req,res) => {
-    const musicSchema = Joi.object().keys({
-        albumName: Joi.string().min(5).max(150).required()
-    });
-    let result = Joi.validate(req.body, musicSchema);
-    console.log(result);
+    let result = ValidationError(req.body);
+    if(result) {res.send(result)}
+    // console.log(result);
     let newMusic = {
         id: musicLibrary.length + 1,
         albumName: req.body.albumName,
@@ -89,5 +87,16 @@ router.delete('/deletemusic/:id',(req,res) => {
         res.send('Music deleted, visit localhost:4040/api/music/allmusic to see the changes.');
     }
 });
+
+
+function ValidationError(message) {
+    let Schema = Joi.object().keys({
+        albumName: Joi.string().min(3).max(150).required(),
+        genre: Joi.string().required(),
+        singerName: Joi.string().required()
+    });
+
+    return Schema.validate(message)
+}
 
 module.exports = router;

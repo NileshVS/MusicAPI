@@ -2,6 +2,7 @@ const express = require('express');
 const Joi = require('@hapi/joi');
 const router = express.Router();
 
+
 let musicLibrary= [{
     id:1,
     albumName: 'Starboy',
@@ -49,7 +50,7 @@ router.get('/allmusic/:id',(req,res) => {
 //Add music using POST
 router.post('/newmusic', (req,res) => {
     let result = ValidationError(req.body);
-    if(result) {res.send(result)}
+    if(result.error) {res.send(result.error.details[0].message)};
     // console.log(result);
     let newMusic = {
         id: musicLibrary.length + 1,
@@ -96,7 +97,7 @@ function ValidationError(message) {
         singerName: Joi.string().required()
     });
 
-    return Schema.validate(message)
+    return Schema.validate(message);
 }
 
 module.exports = router;

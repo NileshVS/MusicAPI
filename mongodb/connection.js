@@ -32,5 +32,5 @@ async function deleteUser(){
     let result= await UserModel.findByIdandDelete('5d8a551943da7a18d489ccef');
 }
 // newUser();
-deleteUser();
+// deleteUser();
 readAllData();
